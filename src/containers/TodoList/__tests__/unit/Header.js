@@ -4,20 +4,19 @@ import {shallow} from 'enzyme';
 import {findTestWrapper} from '../../../../utils/testUtils'
  
 
+describe("Header component", ()=>{
+  it('render success', ()=>{
+    const wrapper = shallow(<Header />)
+    expect(wrapper).toMatchSnapshot() 
+  }) 
+  it('Header component has a input area', ()=>{
+    const wrapper = shallow(<Header />)
+    //const inputElem = wrapper.find("[data-test='input']")
+    const inputElem = findTestWrapper(wrapper, 'input')
+    expect(inputElem.length).toBe(1);
+  }) 
 
-it('Header component render success', ()=>{
-  const wrapper = shallow(<Header />)
-  expect(wrapper).toMatchSnapshot() 
-}) 
-
-it('Header component has a input area', ()=>{
-  const wrapper = shallow(<Header />)
-  //const inputElem = wrapper.find("[data-test='input']")
-  const inputElem = findTestWrapper(wrapper, 'input')
-  expect(inputElem.length).toBe(1);
-}) 
-
-it('the initial content of input should be null', ()=>{
+  it('the initial content of input should be null', ()=>{
     const wrapper = shallow(<Header />)
     const inputElem = findTestWrapper(wrapper, 'input')
     expect(inputElem.prop('value')).toEqual('');
@@ -54,4 +53,13 @@ it('the initial content of input should be null', ()=>{
     inputElem.simulate('keyUp', {keyCode: 13})
     expect(fn).toHaveBeenCalled();
     expect(fn).toHaveBeenLastCalledWith(userInput)
+
+  })
 })
+
+
+
+
+
+
+  
