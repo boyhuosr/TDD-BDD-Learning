@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from '../../components/Header';
-import Enzyme, {shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import {shallow} from 'enzyme';
+import {findTestWrapper} from '../../../../utils/testUtils'
  
-Enzyme.configure({ adapter: new Adapter() });
+
 
 it('Header component render success', ()=>{
   const wrapper = shallow(<Header />)
@@ -12,19 +12,20 @@ it('Header component render success', ()=>{
 
 it('Header component has a input area', ()=>{
   const wrapper = shallow(<Header />)
-  const inputElem = wrapper.find("[data-test='input']")
+  //const inputElem = wrapper.find("[data-test='input']")
+  const inputElem = findTestWrapper(wrapper, 'input')
   expect(inputElem.length).toBe(1);
 }) 
 
 it('the initial content of input should be null', ()=>{
     const wrapper = shallow(<Header />)
-    const inputElem = wrapper.find("[data-test='input']")
+    const inputElem = findTestWrapper(wrapper, 'input')
     expect(inputElem.prop('value')).toEqual('');
   }) 
 
   it('the content of input should be changed based on input', ()=>{
     const wrapper = shallow(<Header />)
-    const inputElem = wrapper.find("[data-test='input']")
+    const inputElem = findTestWrapper(wrapper, 'input')
     const userInput = 'learn Jest today'
     inputElem.simulate('change', {
         target: {value: userInput}
@@ -38,7 +39,7 @@ it('the initial content of input should be null', ()=>{
   it('if click enter, with no content in input, no response', ()=>{
       const fn  = jest.fn()
       const wrapper = shallow(<Header addUndoItem={fn}/>)
-      const inputElem = wrapper.find("[data-test='input']")
+      const inputElem = findTestWrapper(wrapper, 'input')
       wrapper.setState({value: ''})
       inputElem.simulate('keyup', {keyCode: 13})
       expect(fn).not.toHaveBeenCalled();
@@ -47,7 +48,7 @@ it('the initial content of input should be null', ()=>{
   it('if click enter, with content in input, fn should be recalled', ()=>{
     const fn  = jest.fn()
     const wrapper = shallow(<Header addUndoItem={fn}/>)
-    const inputElem = wrapper.find("[data-test='input']")
+    const inputElem = findTestWrapper(wrapper, 'input')
     const userInput = 'learn React'
     wrapper.setState({value: userInput})
     inputElem.simulate('keyUp', {keyCode: 13})
