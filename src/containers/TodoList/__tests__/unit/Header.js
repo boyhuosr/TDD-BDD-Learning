@@ -5,6 +5,11 @@ import Adapter from 'enzyme-adapter-react-16';
  
 Enzyme.configure({ adapter: new Adapter() });
 
+it('Header component render success', ()=>{
+  const wrapper = shallow(<Header />)
+  expect(wrapper).toMatchSnapshot()
+}) 
+
 it('Header component has a input area', ()=>{
   const wrapper = shallow(<Header />)
   const inputElem = wrapper.find("[data-test='input']")
